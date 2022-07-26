@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <memory.h>
 
 typedef struct linklist {
 	int data;
@@ -37,7 +36,6 @@ void append(LinkList** list, int num)
 		list2->data = num;
 		list2->next = NULL;
 		(*list)->next = list2;
-		printf("insert next addr = %p\n", (*list)->next);
 		*list = list2;
 	}
 }
@@ -81,6 +79,22 @@ void deleteNode(LinkList** node)
 	}
 }
 
+void insert(LinkList* list, int data, int pos)
+{
+	int i = 1;
+	LinkList* l = list;
+	LinkList* newlist = create();
+	append(&newlist, data);
+	
+	while (i < pos)
+	{
+		i++;
+		l = l->next;
+	}
+	newlist->next = l->next;
+	(*l).next = newlist ;
+}
+
 int length(LinkList* list)
 {
 	int length = 0;
@@ -108,9 +122,10 @@ int main()
 	append(&linkList, 27);
 	append(&linkList, 103);
 	remove(head, 5);
+	insert(head, 33, 2);
 
 	printf("%d\n", get(head, 1));
-	printf("size = %d\n", length(head));
+	printf("length = %d\n", length(head));
 
 	return 0;
 }
