@@ -1,11 +1,11 @@
 /* 
  * 万能版单向链表，支持在一个链表里添加多种类型数据
- * 在 VS 2022 和 Ubuntu系统上 GCC 11.2上测试通过
+ * 在 VS 2022 上测试通过
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <memoty.h>
+#include <memory.h>
 
 typedef struct linklist {
 	void *data;
@@ -48,7 +48,7 @@ void appendCore(LinkList** list, void *data)
 	}
 }
 
-void append(LinkList** list, void data)
+void append(LinkList** list, void *data)
 {
 	appendCore(list, data);
 }
