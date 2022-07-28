@@ -1,10 +1,11 @@
 /* 
  * 万能版单向链表，支持在一个链表里添加多种类型数据
- * 在 VS 2022 上测试通过
+ * 在 VS 2022 和 Ubuntu系统上 GCC 11.2上测试通过
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <memoty.h>
 
 typedef struct linklist {
 	void *data;
@@ -12,6 +13,7 @@ typedef struct linklist {
 }LinkList;
 
 int length(LinkList* list);
+void appendCore(LinkList** list, void *data);
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
@@ -30,7 +32,7 @@ LinkList* create()
 	return NULL;
 }
 
-void append(LinkList** list, void *data)
+void appendCore(LinkList** list, void *data)
 {
 	LinkList* list2 = (LinkList*)malloc(sizeof(LinkList*));
 	
@@ -46,61 +48,36 @@ void append(LinkList** list, void *data)
 	}
 }
 
+void append(LinkList** list, void data)
+{
+	appendCore(list, data);
+}
+
 void append(LinkList** list, int data)
 {
-	LinkList* list2 = (LinkList*)malloc(sizeof(LinkList*));
 	int x = data;
 	void* np = &x;
+	void* p = malloc(sizeof(void*));
 
-	if (list == NULL) {
-		*list = create();
-	}
-	else {
-		printf("添加链表数据！int\n");
-		void* p = malloc(sizeof(void*));
-		memcpy(p, np, sizeof(np));
-		list2->data = p;
-		list2->next = NULL;
-		(*list)->next = list2;
-		*list = list2;
-	}
+	memcpy(p, np, sizeof(np));
+	appendCore(list, p);
 }
 
 void append(LinkList** list, const char *data)
 {
-	LinkList* list2 = (LinkList*)malloc(sizeof(LinkList*));
 	void* p = (void*)data;
 
-	if (list == NULL) {
-		*list = create();
-	}
-	else {
-		printf("添加链表数据！int\n");
-		list2->data = p;
-		list2->next = NULL;
-		(*list)->next = list2;
-		*list = list2;
-	}
+	appendCore(list, p);
 }
 
 void append(LinkList** list, double data)
 {
-	LinkList* list2 = (LinkList*)malloc(sizeof(LinkList*));
 	double d = data;
 	void* np = &d;
+	void* p = malloc(sizeof(void*));
 
-	if (list == NULL) {
-		*list = create();
-	}
-	else {
-		printf("添加链表数据！int\n");
-		void* p = malloc(sizeof(void*));
-		memcpy(p, np, sizeof(np));
-		list2->data = p;
-		list2->next = NULL;
-		(*list)->next = list2;
-		*list = list2;
-	}
+	memcpy(p, np, sizeof(np));
+	appendCore(list, p);
 }
 
 void *get(LinkList* list, int pos)
@@ -163,8 +140,7 @@ int length(LinkList* list)
 
 int main()
 {
-	LinkList* head;
-	LinkList* linkList = NULL;
+	LinkList *head = NULL, *linkList = NULL;
 	linkList = create();
 	head = linkList;
 
