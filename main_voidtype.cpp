@@ -156,7 +156,7 @@ int main()
 	remove(head, 4);
 	insert(head, &n1, 4);
 	
-	printf("%d\n", *(int*)(get(head, 1)) );
+	printf("%d\n", *(int*)get(head, 1));
 	printf("%d\n", *(int*)get(head, 2));
 	printf("%s\n", (char*)get(head, 3));
 	printf("%d\n", *(int*)get(head, 4));
