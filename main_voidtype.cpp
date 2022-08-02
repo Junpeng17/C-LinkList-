@@ -109,7 +109,7 @@ void remove(LinkList* list, int pos)
 
 }
 
-void insert(LinkList* list, void *data, int pos)
+void insertCore(LinkList* list, void *data, int pos)
 {
 	int i = 1;
 	LinkList* l = list;
@@ -123,6 +123,23 @@ void insert(LinkList* list, void *data, int pos)
 	}
 	newlist->next = l->next;
 	(*l).next = newlist ;
+}
+
+void insert(LinkList* list, int data, int pos)
+{
+	int num = data;
+	void* np = &num;
+	void* p = malloc(sizeof(np)); 
+	
+	memcpy(p, np, sizeof(np));
+	insertCore(list, p, pos);
+}
+
+void insert(LinkList* list, const char *data, int pos)
+{
+	void* p = (void*)data;
+
+	insertCore(list, p, pos);
 }
 
 int length(LinkList* list)
@@ -145,7 +162,7 @@ int main()
 	head = linkList;
 
 	const char* str = "Hello world!";
-	int n1 = 56;
+	// int n1 = 56;
   
 	append(&linkList, 68);
 	append(&linkList, 99);
@@ -154,7 +171,7 @@ int main()
 	append(&linkList, 0.993);
 	append(&linkList, 27.682546);
 	remove(head, 4);
-	insert(head, &n1, 4);
+	insert(head, 56, 4);
 	
 	printf("%d\n", *(int*)get(head, 1));
 	printf("%d\n", *(int*)get(head, 2));
