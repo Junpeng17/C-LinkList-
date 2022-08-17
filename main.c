@@ -95,6 +95,18 @@ void insert(LinkList* list, int data, int pos)
 	(*l).next = newlist ;
 }
 
+void update(LinkList* list, int pos, int newdata)
+{
+	int i = 0;
+	LinkList* l = list->next;
+	
+	while (l != NULL && (i < pos-1)) {
+		l = l->next;
+		i++;
+	}
+	l->data = newdata;
+}
+
 int length(LinkList* list)
 {
 	int length = 0;
@@ -102,7 +114,7 @@ int length(LinkList* list)
 
 	while (l != NULL) {
 	  l = l->next;
-		length++;
+	  length++;
 	}
 
 	return length;
@@ -121,6 +133,7 @@ int main()
 	append(&linkList, 30);
 	append(&linkList, 27);
 	append(&linkList, 103);
+	update(head, 3, 99);
 	remove(head, 5);
 	insert(head, 33, 2);
 
