@@ -105,7 +105,7 @@ void remove(LinkList* list, int pos)
 		i++;
 		l = l->next;
 	}
-	*(*l).next = *(*l).next->next;
+	l->next = l->next->next;
 
 }
 
