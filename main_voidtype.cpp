@@ -155,6 +155,28 @@ int length(LinkList* list)
 	return length;
 }
 
+void invert(LinkList** list)
+{
+	int len = length(*list);
+	char** lp = (char**)malloc(sizeof(LinkList) * len);
+	LinkList *tmp = *list;
+	
+	for (int i=0; i<len; i++) {
+		tmp = tmp->next;
+		lp[i] = (char*)((void*)tmp->data);
+	}
+	
+	int j = len-1;
+	LinkList *list2 = create();
+	*list = list2;
+
+	while (j >= 0) {
+		append(&list2, (void*)lp[j]);
+		j--;
+	}
+	
+}
+
 int main()
 {
 	LinkList *head = NULL, *linkList = NULL;
@@ -172,6 +194,7 @@ int main()
 	append(&linkList, 27.682546);
 	remove(head, 4);
 	insert(head, 56, 4);
+	invert(&head);
 	
 	printf("%d\n", *(int*)get(head, 1));
 	printf("%d\n", *(int*)get(head, 2));
